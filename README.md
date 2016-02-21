@@ -22,7 +22,7 @@ The module allows for managing system packages with Puppet on Alpine Linux, usin
 
 Installation is a simple matter of:
 
-```
+```bash
 puppet module install puppetlabs-apk
 ```
 
@@ -52,15 +52,15 @@ binary when packages are installed, using the `install_options`
 parameter. For instance:
 
 ```puppet
-package { 'ruby':
+package { 'shadow':
   ensure          => installed,
-  install_options => '--allow-untrusted',
+  install_options => ['--update-cache', '--repository http://dl-3.alpinelinux.org/alpine/edge/testing/', '--allow-untrusted'],
 }
 ```
 
 You can also ensure packages are not present with `ensure => absent` and the provider enables puppet resource support on Alpine, so running the following will list all installed packages wit their versions.
 
-```
+```bash
 puppet resource package
 ```
 
@@ -79,8 +79,8 @@ gem install puppet --no-ri --no-rdoc
 
 Note as well that the blockdevice facts on Alpine require root permissions, so unless you delete those facts you will need to run `facter` and `puppet` with sudo or as root. If you'd rather not do so you can delete the offending facts with the following:
 
-```
-rm /usr/lib/ruby/gems/2.2.0/gems/facter-2.4.6/lib/facter/blockdevices.rb
+```bash
+sudo rm /usr/lib/ruby/gems/2.2.0/gems/facter-2.4.6/lib/facter/blockdevices.rb
 ```
 
 ### Todo
