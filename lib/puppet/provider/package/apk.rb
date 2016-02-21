@@ -50,9 +50,10 @@ Puppet::Type.type(:package).provide :apk, :parent => ::Puppet::Provider::Package
     end
   end
 
-  def install
+  def install(options=[])
     args = ['add']
     args += install_options if @resource[:install_options]
+    args += options
     args << name
     apk(*args)
   end
@@ -62,7 +63,7 @@ Puppet::Type.type(:package).provide :apk, :parent => ::Puppet::Provider::Package
   end
 
   def update
-    install
+    install(['--update'])
   end
 
   private

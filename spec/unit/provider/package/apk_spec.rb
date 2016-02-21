@@ -75,7 +75,7 @@ libssh2
   end
 
   it 'should update a package' do
-    provider.expects(:apk).with('add', 'mypackage')
+    provider.expects(:apk).with('add', '--update', 'mypackage')
     provider.update
   end
 
@@ -84,7 +84,7 @@ libssh2
     provider.update
   end
 
-  it 'update check for the latest version of a package' do
+  it 'should check for the latest version of a package' do
     provider.expects(:apk).with('info', 'mypackage', '--no-cache').returns <<-OUTPUT
 fetch http://repos.dfw.lax-noc.com/alpine/v3.3/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-4.alpinelinux.org/alpine/edge/testing/x86_64/APKINDEX.tar.gz
