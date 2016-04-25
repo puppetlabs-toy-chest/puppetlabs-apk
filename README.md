@@ -90,3 +90,7 @@ The module does not update the package cache, but it would be nice to provide a 
 ## Limitations
 
 As noted the module does not work on operating systems other than Alpine, but in those cases you probably have a different package manager with a suitable provider. The module is not supported with Puppet Enterprise as Alpine Linux is not a supported platform at this time, and a suitable `puppet-agent` package is not available.
+
+## Maintainers
+
+This module is maintained by: Gareth Rushgrove <gareth@puppet.com>
