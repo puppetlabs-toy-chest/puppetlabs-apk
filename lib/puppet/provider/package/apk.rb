@@ -22,8 +22,8 @@ Puppet::Type.type(:package).provide :apk, :parent => ::Puppet::Provider::Package
     # We then use the name to determine the version. This has a very small chance
     # of a race condition, if the package database changes between the two
     # runs, but the runtime for apk info is typically miliseconds.
-    packages = apk('info').split("\n")
-    packages_with_versions = apk('info', '-v').split("\n")
+    packages = remove_warnings(apk('info').split("\n"))
+    packages_with_versions = remove_warnings(apk('info', '-v').split("\n"))
     packages.collect.with_index do |package, index|
       version = packages_with_versions[index].gsub("#{package}-", '')
       new({
@@ -32,6 +32,10 @@ Puppet::Type.type(:package).provide :apk, :parent => ::Puppet::Provider::Package
         provider: name,
       })
     end
+  end
+
+  def self.remove_warnings(packages)
+    packages.reject { |name| name.to_s.start_with? 'WARNING' }
   end
 
   def query

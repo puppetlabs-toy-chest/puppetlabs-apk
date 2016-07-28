@@ -59,6 +59,24 @@ libssh2
     expect(instances[0]).to eq({:name => 'ncurses-terminfo', :ensure => '6.0-r6'})
   end
 
+  it 'should not output false package resources for WARNINGS' do
+    described_class.expects(:apk).with('info', '-v').returns <<-OUTPUT
+WARNING: Ignoring APKINDEX.167438ca.tar.gz: No such file or directory
+ncurses-terminfo-6.0-r6
+ncurses-libs-6.0-r6
+    OUTPUT
+    described_class.expects(:apk).with('info',).returns <<-OUTPUT
+WARNING: Ignoring APKINDEX.167438ca.tar.gz: No such file or directory
+ncurses-terminfo
+ncurses-libs
+    OUTPUT
+    described_class.expects(:warning).never
+    instances = described_class.instances.map { |p| {:name => p.get(:name), :ensure => p.get(:ensure) }}
+    expect(instances.size).to eq(2)
+    expect(instances[0]).to eq({:name => 'ncurses-terminfo', :ensure => '6.0-r6'})
+  end
+
+
   it 'should uninstall a package' do
     provider.expects(:apk).with('del', 'mypackage')
     provider.uninstall
