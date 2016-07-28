@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-apk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "puppetlabs",
   "summary": "Manage packages on Alpine Linux using the APK package manager",
   "license": "Apache-2.0",
