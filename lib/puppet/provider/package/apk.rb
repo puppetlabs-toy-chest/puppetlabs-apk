@@ -42,6 +42,7 @@ Puppet::Type.type(:package).provide :apk, :parent => ::Puppet::Provider::Package
     self.class.instances.each do |provider|
       return provider.properties if name.downcase == provider.name.downcase
     end
+    return
   end
 
   def latest
