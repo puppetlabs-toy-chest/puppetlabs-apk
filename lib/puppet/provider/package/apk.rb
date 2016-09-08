@@ -42,6 +42,10 @@ Puppet::Type.type(:package).provide :apk, :parent => ::Puppet::Provider::Package
     self.class.instances.each do |provider|
       return provider.properties if name.downcase == provider.name.downcase
     end
+    # Explicit return because if no match is made/returned, then .each returns
+    # the self.class.instances array. This results in puppet thorwing a 
+    # 'Could not evaluate: no implicit conversion of Symbol into Integer' error.
+    return
   end
 
   def latest
